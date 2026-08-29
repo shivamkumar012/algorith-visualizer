@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithm Visualizer — See algorithms. Understand algorithms.</title>
+  <meta name="description" content="Interactive step-by-step visual learning tool for Data Structures and Algorithms with C++ code execution tracking, time complexity analysis, and recursion call stack visualizer.">
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><rect x='2' y='13' width='4' height='8' rx='1'/><rect x='8' y='7' width='4' height='14' rx='1'/><rect x='14' y='3' width='4' height='18' rx='1'/><rect x='20' y='10' width='4' height='11' rx='1'/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-layout" id="app-layout">
+    
+    <!-- Top Header -->
+    <header class="app-header" id="app-header">
+      <div class="header-left">
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Toggle Navigation Sidebar">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="brand-container">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="13" width="4" height="8" rx="1"></rect>
+              <rect x="8" y="7" width="4" height="14" rx="1"></rect>
+              <rect x="14" y="3" width="4" height="18" rx="1"></rect>
+              <rect x="20" y="10" width="4" height="11" rx="1"></rect>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1 class="brand-title">Algorithm Visualizer</h1>
+            <p class="brand-tagline">See algorithms. Understand algorithms.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Keyboard shortcuts hint -->
+        <div class="shortcuts-badge" title="Shortcuts: Space (Play/Pause), Left/Right (Step), R (Reset)">
+          <span class="kbd">Space</span> Play/Pause &nbsp;•&nbsp; <span class="kbd">←</span> <span class="kbd">→</span> Step &nbsp;•&nbsp; <span class="kbd">R</span> Reset
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Light/Dark Theme" title="Toggle Theme (Dark / Light)">
+          <div class="theme-icon-container">
+            <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </div>
+          <span class="theme-label" id="theme-label">Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Body: Sidebar + Main Content Grid -->
+    <div class="app-body">
+      
+      <!-- Navigation Sidebar -->
+      <aside class="app-sidebar" id="app-sidebar">
+        <div class="sidebar-content">
+          <div class="sidebar-section-title">Algorithms</div>
+
+          <!-- Category 1: Searching -->
+          <div class="nav-category">
+            <div class="category-header">
+              <span class="category-icon">🔍</span>
+              <span class="category-name">Searching</span>
+            </div>
+            <ul class="nav-list">
+              <li>
+                <button class="nav-item-btn" data-algorithm="linear-search" id="nav-linear-search">
+                  <span class="nav-bullet"></span>
+                  <span class="nav-text">Linear Search</span>
+                  <span class="nav-pill">O(n)</span>
+                </button>
+              </li>
+              <li>
+                <button class="nav-item-btn" data-algorithm="binary-search" id="nav-binary-search">
+                  <span class="nav-bullet"></span>
+                  <span class="nav-text">Binary Search</span>
+                  <span class="nav-pill">O(log n)</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Category 2: Sorting -->
+          <div class="nav-category">
+            <div class="category-header">
+              <span class="category-icon">📊</span>
+              <span class="category-name">Sorting</span>
+            </div>
+            <ul class="nav-list">
+              <li>
+                <button class="nav-item-btn active" data-algorithm="bubble-sort" id="nav-bubble-sort">
+                  <span class="nav-bullet"></span>
+                  <span class="nav-text">Bubble Sort</span>
+                  <span class="nav-pill">O(n²)</span>
+                </button>
+              </li>
+              <li>
+                <button class="nav-item-btn" data-algorithm="selection-sort" id="nav-selection-sort">
+                  <span class="nav-bullet"></span>
+                  <span class="nav-text">Selection Sort</span>
+                  <span class="nav-pill">O(n²)</span>
+                </button>
+              </li>
+              <li>
+                <button class="nav-item-btn" data-algorithm="insertion-sort" id="nav-insertion-sort">
+                  <span class="nav-bullet"></span>
+                  <span class="nav-text">Insertion Sort</span>
+                  <span class="nav-pill">O(n²)</span>
+                </button>
+              </li>
+              <li>
+                <button class="nav-item-btn" data-algorithm="merge-sort" id="nav-merge-sort">
+                  <span class="nav-bullet"></span>
+                  <span class="nav-text">Merge Sort</span>
+                  <span class="nav-pill">O(n log n)</span>
+                </button>
+              </li>
+              <li>
+                <button class="nav-item-btn" data-algorithm="quick-sort" id="nav-quick-sort">
+                  <span class="nav-bullet"></span>
+                  <span class="nav-text">Quick Sort</span>
+                  <span class="nav-pill">O(n log n)</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Category 3: Recursion -->
+          <div class="nav-category">
+            <div class="category-header">
+              <span class="category-icon">🔄</span>
+              <span class="category-name">Recursion</span>
+            </div>
+            <ul class="nav-list">
+              <li>
+                <button class="nav-item-btn" data-algorithm="recursion" id="nav-recursion">
+                  <span class="nav-bullet"></span>
+                  <span class="nav-text">Recursion (Call Stack)</span>
+                  <span class="nav-pill">Factorial</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+          <div class="legend-box">
+            <div class="legend-title">Color Guide</div>
+            <div class="legend-items">
+              <div class="legend-item"><span class="legend-swatch swatch-default"></span> Unsorted / Idle</div>
+              <div class="legend-item"><span class="legend-swatch swatch-comparing"></span> Comparing / Active</div>
+              <div class="legend-item"><span class="legend-swatch swatch-swapping"></span> Swapping / Shift</div>
+              <div class="legend-item"><span class="legend-swatch swatch-pivot"></span> Pivot / Minimum</div>
+              <div class="legend-item"><span class="legend-swatch swatch-sorted"></span> Sorted / Found</div>
+              <div class="legend-item"><span class="legend-swatch swatch-eliminated"></span> Discarded / Boundary</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Sidebar Backdrop for Mobile -->
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+      <!-- Main Visualizer Arena -->
+      <main class="app-main">
+        
+        <!-- Algorithm Header Card -->
+        <section class="algo-header-card" id="algo-header-card">
+          <div class="algo-header-top">
+            <div class="algo-title-group">
+              <span class="algo-category-badge" id="algo-category-badge">Sorting</span>
+              <h2 class="algo-title" id="algo-title">Bubble Sort</h2>
+            </div>
+            <div class="algo-quick-traits" id="algo-quick-traits">
+              <!-- Dynamically populated trait badges -->
+            </div>
+          </div>
+          <p class="algo-description" id="algo-description">
+            Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
+          </p>
+
+          <!-- Warning message (e.g. For Binary Search if unsorted) -->
+          <div class="algo-alert hidden" id="sort-warning">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>Binary Search requires a sorted array. Click <strong>Sort Ascending</strong> to sort before running.</span>
+            <button class="alert-action-btn" id="alert-sort-btn">Sort Array</button>
+          </div>
+        </section>
+
+        <!-- Visualization Canvas Arena -->
+        <section class="canvas-arena-card">
+          
+          <!-- Narrative Status Banner -->
+          <div class="narrative-banner" id="status-banner">
+            Algorithm ready. Press Play or Next Step to begin execution.
+          </div>
+
+          <!-- Visual Canvas -->
+          <div class="visualizer-canvas array-mode" id="visualizer-canvas">
+            <!-- Dynamic vertical bars or recursion call stack frames inserted here -->
+          </div>
+
+          <!-- Timeline Scrubber & Stats Bar -->
+          <div class="timeline-hud">
+            <div class="timeline-scrubber-container">
+              <input type="range" class="timeline-slider" id="timeline-slider" min="1" max="1" value="1" aria-label="Step Timeline Scrubber">
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="stat-label">Step Progress</span>
+                <span class="stat-val" id="stat-step">1 / 1</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label" id="stat-comp-label">Comparisons</span>
+                <span class="stat-val text-amber" id="stat-comparisons">0</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label" id="stat-swaps-label">Swaps</span>
+                <span class="stat-val text-coral" id="stat-swaps">0</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Status</span>
+                <span class="status-badge badge-idle" id="stat-status-badge">IDLE</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Control Toolbar & Inputs -->
+        <section class="controls-card">
+          <div class="controls-main-toolbar">
+            
+            <!-- Primary Execution Buttons -->
+            <div class="btn-group-primary">
+              <button class="btn btn-primary" id="btn-play">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span>Play</span>
+              </button>
+
+              <button class="btn btn-secondary" id="btn-prev" title="Previous Step (Left Arrow)">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                  <line x1="5" y1="19" x2="5" y2="5"></line>
+                </svg>
+                <span>Prev</span>
+              </button>
+
+              <button class="btn btn-secondary" id="btn-next" title="Next Step (Right Arrow)">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                  <line x1="19" y1="5" x2="19" y2="19"></line>
+                </svg>
+                <span>Next</span>
+              </button>
+
+              <button class="btn btn-secondary" id="btn-reset" title="Reset to Start (R)">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                <span>Reset</span>
+              </button>
+            </div>
+
+            <!-- Speed Controls -->
+            <div class="speed-control-group">
+              <span class="ctrl-label">Speed:</span>
+              <div class="speed-btn-toggle">
+                <button class="speed-btn" data-speed="1200">Slow</button>
+                <button class="speed-btn active" data-speed="600">Normal</button>
+                <button class="speed-btn" data-speed="200">Fast</button>
+                <button class="speed-btn" data-speed="60">Turbo</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Dynamic Input Panels: Array Controls vs Searching vs Recursion -->
+          <div class="inputs-sub-panel">
+            
+            <!-- Array Manipulation Controls (For Sorting & Searching) -->
+            <div class="array-controls-grid" id="array-controls-panel">
+              
+              <!-- Action buttons -->
+              <div class="input-actions-row">
+                <button class="btn btn-sub" id="btn-random">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="16 3 21 3 21 8"></polyline>
+                    <line x1="4" y1="20" x2="21" y2="3"></line>
+                    <polyline points="21 16 21 21 16 21"></polyline>
+                    <line x1="15" y1="15" x2="21" y2="21"></line>
+                    <line x1="4" y1="4" x2="9" y2="9"></line>
+                  </svg>
+                  <span>Generate Random</span>
+                </button>
+                <button class="btn btn-sub" id="btn-shuffle">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                  </svg>
+                  <span>Shuffle</span>
+                </button>
+                <button class="btn btn-sub" id="btn-sort">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                  </svg>
+                  <span>Sort Ascending</span>
+                </button>
+              </div>
+
+              <!-- Array Size Slider -->
+              <div class="size-slider-row">
+                <label for="array-size-slider" class="ctrl-label">Size: <strong id="size-value-label">12</strong> elements</label>
+                <input type="range" id="array-size-slider" min="5" max="35" value="12" class="range-slider">
+              </div>
+
+              <!-- Search Target Input (For Linear and Binary Search) -->
+              <div class="target-control-group hidden" id="target-control-group">
+                <label for="target-input" class="ctrl-label">Search Target:</label>
+                <div class="target-input-box">
+                  <input type="number" id="target-input" min="1" max="100" value="25" class="num-input">
+                  <button class="btn btn-sub" id="btn-pick-target" title="Pick an existing value from array">Pick from Array</button>
+                </div>
+              </div>
+
+              <!-- Custom Array Entry -->
+              <div class="custom-array-group">
+                <form id="custom-array-form" class="custom-array-form">
+                  <label for="custom-array-input" class="ctrl-label">Custom Array (comma-separated):</label>
+                  <div class="custom-input-box">
+                    <input type="text" id="custom-array-input" placeholder="e.g. 45, 12, 85, 32, 89, 39, 69, 22" class="text-input">
+                    <button type="button" class="btn btn-sub" id="btn-apply-custom">Apply Array</button>
+                  </div>
+                  <div class="input-error-msg hidden" id="custom-array-error"></div>
+                </form>
+              </div>
+
+            </div>
+
+            <!-- Recursion Dedicated Controls Panel -->
+            <div class="recursion-controls-grid hidden" id="recursion-controls-panel">
+              <div class="recursion-input-row">
+                <label for="recursion-n-input" class="ctrl-label">Compute Factorial for <strong>n = <span id="recursion-n-label">5</span></strong>:</label>
+                <div class="recursion-slider-box">
+                  <input type="range" id="recursion-n-input" min="1" max="8" value="5" class="range-slider">
+                  <span class="range-hint">(1 to 8 frames)</span>
+                </div>
+              </div>
+              <div class="recursion-info-tip">
+                💡 <em>Visualizes Call Stack frame creation, parameter passage, base case condition check, and recursive return unwinding.</em>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Information & Code Panels Grid -->
+        <div class="info-code-grid">
+          
+          <!-- Algorithm Explanation & Complexity Details -->
+          <section class="algo-details-card">
+            <div class="card-header">
+              <div class="card-title">
+                <span class="card-icon">📖</span>
+                <span>Algorithm Breakdown</span>
+              </div>
+            </div>
+
+            <div class="details-section">
+              <h3 class="details-subtitle">How It Works</h3>
+              <ol class="how-it-works-list" id="how-it-works-list">
+                <!-- Dynamically generated list -->
+              </ol>
+            </div>
+
+            <div class="details-section">
+              <h3 class="details-subtitle">Complexity Analysis</h3>
+              <div class="complexity-table-wrapper">
+                <table class="complexity-table">
+                  <thead>
+                    <tr>
+                      <th>Condition</th>
+                      <th>Time Complexity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Best Case</td>
+                      <td><code class="complexity-val" id="comp-best">O(n)</code></td>
+                    </tr>
+                    <tr>
+                      <td>Average Case</td>
+                      <td><code class="complexity-val" id="comp-avg">O(n²)</code></td>
+                    </tr>
+                    <tr>
+                      <td>Worst Case</td>
+                      <td><code class="complexity-val" id="comp-worst">O(n²)</code></td>
+                    </tr>
+                    <tr>
+                      <td>Space Complexity</td>
+                      <td><code class="complexity-val" id="comp-space">O(1)</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="details-section">
+              <h3 class="details-subtitle">Characteristics</h3>
+              <div class="characteristics-grid" id="characteristics-grid">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </section>
+
+          <!-- C++ Implementation Code Panel -->
+          <section class="cpp-code-card">
+            <div class="card-header">
+              <div class="card-title">
+                <span class="card-icon">💻</span>
+                <span>C++ Implementation</span>
+              </div>
+              <span class="code-lang-tag">C++ (Step Sync)</span>
+            </div>
+
+            <div class="code-editor-container">
+              <div class="code-scroller" id="cpp-code-container">
+                <!-- Syntax highlighted C++ lines rendered here -->
+              </div>
+            </div>
+            
+            <div class="code-footer">
+              <div class="code-footer-tip">
+                <span class="pulse-indicator"></span>
+                <span>Highlighted line actively updates with visual execution state</span>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Modular JavaScript Entry Point -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
